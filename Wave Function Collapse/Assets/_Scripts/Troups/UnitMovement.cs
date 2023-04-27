@@ -7,8 +7,12 @@ using UnityEngine.InputSystem;
 public class UnitMovement : MonoBehaviour
 {
     Camera myCam;
-    NavMeshAgent myAgent;
+    public NavMeshAgent myAgent;
     public LayerMask groundLayer;
+
+    [SerializeField]
+    private float _turnSpeed = .02f;
+    public Quaternion endRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +31,21 @@ public class UnitMovement : MonoBehaviour
             
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
             {
-                myAgent.SetDestination(hit.point);
+                //myAgent.SetDestination(hit.point);
             }
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (myAgent.remainingDistance <= myAgent.stoppingDistance + float.Epsilon)
+        {
+            myAgent.updateRotation = false;
+            transform.rotation = Quaternion.Slerp(transform.rotation, endRotation, _turnSpeed);
+        }
+        else
+        {
+            myAgent.updateRotation = true;
         }
     }
 }
