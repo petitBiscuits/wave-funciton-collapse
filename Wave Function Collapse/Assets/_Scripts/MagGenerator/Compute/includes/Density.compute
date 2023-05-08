@@ -1,0 +1,5 @@
+﻿uint numPointsPerAxis;
+
+int indexFromCoord(uint x, uint y, uint z) {
+    return z * numPointsPerAxis * numPointsPerAxis + y * numPointsPerAxis*2 + x;
+}

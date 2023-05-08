@@ -21,6 +21,7 @@ public class PixelizePass : ScriptableRenderPass
         if (material == null) material = CoreUtils.CreateEngineMaterial("Hidden/Pixelize");
     }
 
+    
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
         CommandBuffer cmd = CommandBufferPool.Get();
@@ -33,7 +34,7 @@ public class PixelizePass : ScriptableRenderPass
         context.ExecuteCommandBuffer(cmd);
         CommandBufferPool.Release(cmd);
     }
-
+    
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
     {
         colorBuffer = renderingData.cameraData.renderer.cameraColorTarget;
